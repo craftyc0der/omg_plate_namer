@@ -1,25 +1,92 @@
 import zbarlight
 import os 
-from PIL import Image
+from PIL import Image, ImageEnhance
 import sys
 import getopt
+
 
 def decode_barcode( file_path ) :
     if os.path.isfile( file_path ) :
         with open(file_path, 'rb') as image_file:
             image = Image.open(image_file)
             image.load()
+#             width, height = image.size   # Get dimensions
+#             left = 3*width/4
+#             top = 0
+#             right = width
+#             bottom = height/4
+#             img_qr = image.crop((left, top, right, bottom))
+#             left = 1*width/3
+#             top = 3.5*height/6
+#             right = 2*width/3
+#             bottom = 5*height/6
+#             img_barcode = image.crop((left, top, right, bottom))
+#             img_qr = enhance(img_qr)
+#             qrcode = zbarlight.scan_codes(['qrcode'], img_qr)
+#             img_barcode = enhance(img_barcode)
+#             img_qr.save('test1.jpg')
+#             img_barcode.save('test2.jpg')
+#             barcode = zbarlight.scan_codes(['code128'], img_barcode)  
+#             print (qrcode, barcode)
+#             codes = None
+#             if qrcode != None and barcode != None:
+#                 codes = [qrcode[0], barcode[0]]
+            day = None
+            plate = None        
             codes = zbarlight.scan_codes(['qrcode', 'code128'], image)
-            if len(codes) == 2 :
-                day = codes[0]
-                plate = codes[1]
-                if len(day) > 2 :
-                    day = codes[1]
-                    plate = codes[0]
-                day = day.zfill(2)
-                return plate.decode("utf-8"), day.decode("utf-8")
-    print ('barcode image scan failed [ %s ] is not a file.' % file)
+#             print( codes )
+            day, plate = extract_codes (codes, day, plate)
 
+            if day == None or plate == None :
+                enhanced_image = enhance(image, 1.5)
+                enhanced_image.save('test1.5.jpg')
+                codes = zbarlight.scan_codes(['qrcode', 'code128'], enhanced_image)
+#                 print( codes )
+                day, plate = extract_codes (codes, day, plate)
+            if day == None or plate == None :
+                enhanced_image = enhance(image, 2.0)
+                enhanced_image.save('test2.0.jpg')
+                codes = zbarlight.scan_codes(['qrcode', 'code128'], enhanced_image)
+#                 print( codes )                
+                day, plate = extract_codes (codes, day, plate)
+            if day == None or plate == None :
+                enhanced_image = enhance(image, 2.5)
+                enhanced_image.save('test2.5.jpg')
+                codes = zbarlight.scan_codes(['qrcode', 'code128'], enhanced_image)                
+#                 print( codes )
+                day, plate = extract_codes (codes, day, plate)
+            if day != None and plate != None :
+                return plate.decode("utf-8"), day.decode("utf-8")
+            print ('barcode image scan failed [ %s ] is not a file.' % image_file.name)
+            return None, None
+
+def extract_codes( codes, day, plate ):
+    iday = None
+    iplate = None
+    if codes != None:
+        for code in codes:
+            if len(code) > 2 :
+                iplate = code
+            else:
+                iday = code
+    if day == None and iday:
+        day = iday
+    if plate == None and iplate:
+        plate = iplate                
+    return day, plate
+            
+
+def enhance( img, magnitude ):
+    enhancer = ImageEnhance.Sharpness(img)
+    img = enhancer.enhance(1.5)
+    enhancer = ImageEnhance.Color(img)
+    img = enhancer.enhance(0)
+    enhancer = ImageEnhance.Brightness(img)
+    img = enhancer.enhance(magnitude)
+    enhancer = ImageEnhance.Contrast(img)
+    img = enhancer.enhance(magnitude)
+    return img
+        
 def rename_files( from_path, to_path, move ) :
     if not os.path.exists( to_path ):
         os.makedirs( to_path );
@@ -29,14 +96,15 @@ def rename_files( from_path, to_path, move ) :
         if filename.lower().endswith(".jpg") :
             from_file = from_path + "/" + filename
             plate, day = decode_barcode( from_file )
-            to_file = '%s/%s_%s.jpg' % (to_path, plate, day)
-            if move:
-                # move the file
-                os.rename(from_file, to_file)
-            else :
-                # copy the file
-                os.popen('cp %s %s' % (from_file, to_file))
-            print ('%s -> %s' % (from_file, to_file))
+            if plate != None:
+                to_file = '%s/%s_%s.jpg' % (to_path, plate, day)
+                if move:
+                    # move the file
+                    os.rename(from_file, to_file)
+                else :
+                    # copy the file
+                    os.popen('cp %s %s' % (from_file, to_file))
+                print ('%s -> %s' % (from_file, to_file))
             
 def main(argv):
     source = ''
