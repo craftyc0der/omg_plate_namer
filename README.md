@@ -51,6 +51,10 @@ IMG_0055.JPG  IMG_0078.JPG  IMG_0753.JPG
 
 Images have a `Code-128` barcode and a `QRCode`. The barcode is the photoID. The QRCode is the image series modified (such as week of experiment).
 
+![Example Image](example.jpg?raw=true)
+#### The QRCode must be 1 or 2 characters. The barcode should be longer than 5 characters. Both need to have plenty of white space around them to be found by the program.
+
+
 The program will rename the images as `sampleID__QRCode.jpg`
 
 ### How to run program from terminal
