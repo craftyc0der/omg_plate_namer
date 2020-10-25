@@ -32,8 +32,11 @@ drwxrwxr-x 2 josh josh 28672 Oct 24 13:33 milkweed_foliar_fungal_endophytes
 -rw-rw-r-- 1 josh josh  4876 Oct 25 11:03 plates.py
 ```
 
-The program is called like this: `python plates.py --help`
-`python plates.py -s <source-path> -d <destination-path> -m (files will be moved rather than copied) -f (run without prompt for automated scripting)`
+The program is called like this:
+```bash
+$ python plates.py --help
+python plates.py -s <source-path> -d <destination-path> -m (files will be moved rather than copied) -f (run without prompt for automated scripting)
+```
 
 Then, you will call the program like this:
 ```bash
