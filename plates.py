@@ -64,7 +64,7 @@ def enhance( img, magnitude ):
         
 def rename_files( from_path, to_path, move ) :
     if not os.path.exists( to_path ):
-        os.makedirs( to_path );
+        os.makedirs( to_path )
     directory = os.fsencode( from_path )
     for file in os.listdir( directory ) :
         filename = os.fsdecode( file )
