@@ -17,17 +17,17 @@ def decode_barcode( file_path ) :
 
             if day == None or plate == None :
                 enhanced_image = enhance(image, 1.5)
-                enhanced_image.save('test1.5.jpg')
+                # enhanced_image.save('test1.5.jpg')
                 codes = zbarlight.scan_codes(['qrcode', 'code128'], enhanced_image)
                 day, plate = extract_codes (codes, day, plate)
             if day == None or plate == None :
                 enhanced_image = enhance(image, 2.0)
-                enhanced_image.save('test2.0.jpg')
+                # enhanced_image.save('test2.0.jpg')
                 codes = zbarlight.scan_codes(['qrcode', 'code128'], enhanced_image)
                 day, plate = extract_codes (codes, day, plate)
             if day == None or plate == None :
                 enhanced_image = enhance(image, 2.5)
-                enhanced_image.save('test2.5.jpg')
+                # enhanced_image.save('test2.5.jpg')
                 codes = zbarlight.scan_codes(['qrcode', 'code128'], enhanced_image)
                 day, plate = extract_codes (codes, day, plate)
             if day != None and plate != None :
