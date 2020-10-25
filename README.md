@@ -8,6 +8,7 @@ conda env create --file plates.yaml
 #### or
 ```bash
 conda create --name plates python=3.7.6
+conda activate plates
 conda install -c conda-forge zbarlight
 conda install -c anaconda pillow
 conda install nb_conda
