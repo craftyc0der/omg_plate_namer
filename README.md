@@ -1,29 +1,9 @@
 # Gerardo Lab
+
 ## Plates Photo Importer
 
-### Setup Anaconda Environment
-```bash
-conda env create --file plates.yaml
-```
-#### or
-```bash
-conda create --name plates python=3.7.6
-conda activate plates
-conda install -c conda-forge zbarlight
-conda install -c anaconda pillow
-conda install nb_conda
-```
-
-### Start Jupyter Lab
-```bash
-conda activate plates
-export PATH=$HOME/anaconda3/bin:$PATH
-python -m ipykernel install --user --name=plates;
-echo "Use the plates kernel in jupyter!"
-jupyter lab
-```
-
 ### Priors
+
 The assumption here is that there is a folder that contains raw images. Adjacent to that folder should be a csv file with the same name as the folder.
 
 ```bash
@@ -34,7 +14,8 @@ drwxrwxr-x 2 josh josh 28672 Oct 24 13:33 milkweed_foliar_fungal_endophytes
 ```
 
 CSV contents look like this:
-```
+
+```csv
 photoID,sampleID
 100000,MW001_1
 100001,MW003_2
@@ -45,6 +26,7 @@ photoID,sampleID
 ```
 
 Image folder contains `jpg` images.
+
 ```
 $ ls ./milkweed_foliar_fungal_endophytes
 IMG_0055.JPG  IMG_0078.JPG  IMG_0753.JPG
@@ -53,18 +35,50 @@ IMG_0055.JPG  IMG_0078.JPG  IMG_0753.JPG
 Images have a `Code-128` barcode and a `QRCode`. The barcode is the photoID. The QRCode is the image series modified (such as week of experiment).
 
 ![Example Image](example.jpg?raw=true)
+
 #### The QRCode must be 1 or 2 characters. The barcode should be longer than 5 characters. Both need to have plenty of white space around them to be found by the program.
 
-
 The program will rename the images as `sampleID__QRCode.jpg`
+
+## First Time Setup
+
+### Setup Anaconda Environment
+
+```bash
+conda env create --file plates.yaml
+```
+
+#### or
+
+```bash
+conda create --name plates python=3.7.6
+conda activate plates
+conda install -c conda-forge zbarlight
+conda install -c anaconda pillow
+conda install nb_conda
+```
+
+## Everyday Use
+
+### Start Jupyter Lab
+
+```bash
+conda activate plates
+export PATH=$HOME/anaconda3/bin:$PATH
+python -m ipykernel install --user --name=plates;
+echo "Use the plates kernel in jupyter!"
+jupyter lab
+```
 
 ### How to run program from terminal
 
 The program is called like this:
+
 ```bash
+conda activate plates
 $ python plates.py --help
 python plates.py -s <source-path> -d <destination-path> -m (files will be moved rather than copied) -f (run without prompt for automated scripting)
-$ 
+$
 $ python plates.py -s ./milkweed_foliar_fungal_endophytes -d ./sorted
 Source path is ./milkweed_foliar_fungal_endophytes
 Destination path is ./sorted
