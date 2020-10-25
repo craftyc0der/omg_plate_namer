@@ -25,6 +25,13 @@ jupyter lab
 ### Priors
 The assumption here is that there is a folder that contains raw images. Adjacent to that folder should be a csv file with the same name as the folder.
 
+```bash
+$ ls -al
+drwxrwxr-x 2 josh josh 28672 Oct 24 13:33 milkweed_foliar_fungal_endophytes
+-rw-rw-r-- 1 josh josh 16269 Oct 24 13:35 milkweed_foliar_fungal_endophytes.csv
+-rw-rw-r-- 1 josh josh  4876 Oct 25 11:03 plates.py
+```
+
 CSV contents look like this:
 ```
 photoID,sampleID
@@ -47,13 +54,6 @@ Images have a `Code-128` barcode and a `QRCode`. The barcode is the photoID. The
 The program will rename the images as `sampleID__QRCode.jpg`
 
 ### How to run program from terminal
-
-```bash
-$ ls -al
-drwxrwxr-x 2 josh josh 28672 Oct 24 13:33 milkweed_foliar_fungal_endophytes
--rw-rw-r-- 1 josh josh 16269 Oct 24 13:35 milkweed_foliar_fungal_endophytes.csv
--rw-rw-r-- 1 josh josh  4876 Oct 25 11:03 plates.py
-```
 
 The program is called like this:
 ```bash
