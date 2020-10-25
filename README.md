@@ -10,6 +10,7 @@ conda env create --file plates.yaml
 conda create --name plates python=3.7.6
 conda install -c conda-forge zbarlight
 conda install -c anaconda pillow
+conda install nb_conda
 ```
 
 ### Start Jupyter Lab
@@ -17,6 +18,7 @@ conda install -c anaconda pillow
 conda activate plates
 export PATH=$HOME/anaconda3/bin:$PATH
 python -m ipykernel install --user --name=plates;
+echo "Use the plates kernel in jupyter!"
 jupyter lab
 ```
 
@@ -30,11 +32,38 @@ drwxrwxr-x 2 josh josh 28672 Oct 24 13:33 milkweed_foliar_fungal_endophytes
 -rw-rw-r-- 1 josh josh  4876 Oct 25 11:03 plates.py
 ```
 
-The program is called like this: `python plates.py --help`
-`python plates.py -s <source-path> -d <destination-path> -m (files will be moved rather than copied) -f (run without prompt for automated scripting)`
+CSV contents look like this:
+```
+photoID,sampleID
+100000,MW001_1
+100001,MW003_2
+100002,MW003_1
+100003,MW002_5
+100004,MW003_3
+100005,MW006_4
+```
 
-Then, you will call the program like this:
+Image folder contains `jpg` images.
+```
+$ ls ./milkweed_foliar_fungal_endophytes
+IMG_0055.JPG  IMG_0078.JPG  IMG_0753.JPG
+```
+
+Images have a `Code-128` barcode and a `QRCode`. The barcode is the photoID. The QRCode is the image series modified (such as week of experiment).
+
+![Example Image](example.jpg?raw=true)
+#### The QRCode must be 1 or 2 characters. The barcode should be longer than 5 characters. Both need to have plenty of white space around them to be found by the program.
+
+
+The program will rename the images as `sampleID__QRCode.jpg`
+
+### How to run program from terminal
+
+The program is called like this:
 ```bash
+$ python plates.py --help
+python plates.py -s <source-path> -d <destination-path> -m (files will be moved rather than copied) -f (run without prompt for automated scripting)
+$ 
 $ python plates.py -s ./milkweed_foliar_fungal_endophytes -d ./sorted
 Source path is ./milkweed_foliar_fungal_endophytes
 Destination path is ./sorted
