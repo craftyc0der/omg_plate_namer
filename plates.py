@@ -3,6 +3,7 @@ import os
 from PIL import Image, ImageEnhance
 import sys
 import getopt
+import csv
 
 
 def decode_barcode( file_path ) :
@@ -65,6 +66,11 @@ def enhance( img, magnitude ):
 def rename_files( from_path, to_path, move ) :
     if not os.path.exists( to_path ):
         os.makedirs( to_path )
+    fileDict = {}
+    with open(from_path + '.csv', newline='\n') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            fileDict[row['photoID']] = row['sampleID']
     directory = os.fsencode( from_path )
     for file in os.listdir( directory ) :
         filename = os.fsdecode( file )
@@ -72,7 +78,10 @@ def rename_files( from_path, to_path, move ) :
             from_file = from_path + "/" + filename
             plate, day = decode_barcode( from_file )
             if plate != None:
-                to_file = '%s/%s_%s.jpg' % (to_path, plate, day)
+                try:
+                    to_file = '%s/%s__%s.jpg' % (to_path, fileDict[plate], day)
+                except KeyError:
+                    to_file = '%s/%s__%s.jpg' % (to_path, plate, day)
                 if move:
                     # move the file
                     os.rename(from_file, to_file)
