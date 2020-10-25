@@ -60,16 +60,6 @@ conda install nb_conda
 
 ## Everyday Use
 
-### Start Jupyter Lab
-
-```bash
-conda activate plates
-export PATH=$HOME/anaconda3/bin:$PATH
-python -m ipykernel install --user --name=plates;
-echo "Use the plates kernel in jupyter!"
-jupyter lab
-```
-
 ### How to run program from terminal
 
 The program is called like this:
@@ -96,4 +86,14 @@ Would you like to proceed? (yes|no) yes
 ./milkweed_foliar_fungal_endophytes/IMG_0890.JPG -> ./sorted/MW215_3__2.jpg
 ./milkweed_foliar_fungal_endophytes/IMG_0061.JPG -> ./sorted/MW006_4__1.jpg
 ./milkweed_foliar_fungal_endophytes/IMG_0769.JPG -> ./sorted/MW199_5__2.jpg
+```
+
+### Start Jupyter Lab
+
+```bash
+conda activate plates
+export PATH=$HOME/anaconda3/bin:$PATH
+python -m ipykernel install --user --name=plates;
+echo "Use the plates kernel in jupyter!"
+jupyter lab
 ```
