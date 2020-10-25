@@ -10,6 +10,7 @@ conda env create --file plates.yaml
 conda create --name plates python=3.7.6
 conda install -c conda-forge zbarlight
 conda install -c anaconda pillow
+conda install nb_conda
 ```
 
 ### Start Jupyter Lab
@@ -17,6 +18,7 @@ conda install -c anaconda pillow
 conda activate plates
 export PATH=$HOME/anaconda3/bin:$PATH
 python -m ipykernel install --user --name=plates;
+echo "Use the plates kernel in jupyter!"
 jupyter lab
 ```
 
