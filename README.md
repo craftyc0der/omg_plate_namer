@@ -63,10 +63,7 @@ The program is called like this:
 ```bash
 $ python plates.py --help
 python plates.py -s <source-path> -d <destination-path> -m (files will be moved rather than copied) -f (run without prompt for automated scripting)
-```
-
-Then, you will call the program like this:
-```bash
+$ 
 $ python plates.py -s ./milkweed_foliar_fungal_endophytes -d ./sorted
 Source path is ./milkweed_foliar_fungal_endophytes
 Destination path is ./sorted
