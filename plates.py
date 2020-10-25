@@ -10,50 +10,25 @@ def decode_barcode( file_path ) :
         with open(file_path, 'rb') as image_file:
             image = Image.open(image_file)
             image.load()
-#             width, height = image.size   # Get dimensions
-#             left = 3*width/4
-#             top = 0
-#             right = width
-#             bottom = height/4
-#             img_qr = image.crop((left, top, right, bottom))
-#             left = 1*width/3
-#             top = 3.5*height/6
-#             right = 2*width/3
-#             bottom = 5*height/6
-#             img_barcode = image.crop((left, top, right, bottom))
-#             img_qr = enhance(img_qr)
-#             qrcode = zbarlight.scan_codes(['qrcode'], img_qr)
-#             img_barcode = enhance(img_barcode)
-#             img_qr.save('test1.jpg')
-#             img_barcode.save('test2.jpg')
-#             barcode = zbarlight.scan_codes(['code128'], img_barcode)  
-#             print (qrcode, barcode)
-#             codes = None
-#             if qrcode != None and barcode != None:
-#                 codes = [qrcode[0], barcode[0]]
             day = None
             plate = None        
             codes = zbarlight.scan_codes(['qrcode', 'code128'], image)
-#             print( codes )
             day, plate = extract_codes (codes, day, plate)
 
             if day == None or plate == None :
                 enhanced_image = enhance(image, 1.5)
                 enhanced_image.save('test1.5.jpg')
                 codes = zbarlight.scan_codes(['qrcode', 'code128'], enhanced_image)
-#                 print( codes )
                 day, plate = extract_codes (codes, day, plate)
             if day == None or plate == None :
                 enhanced_image = enhance(image, 2.0)
                 enhanced_image.save('test2.0.jpg')
                 codes = zbarlight.scan_codes(['qrcode', 'code128'], enhanced_image)
-#                 print( codes )                
                 day, plate = extract_codes (codes, day, plate)
             if day == None or plate == None :
                 enhanced_image = enhance(image, 2.5)
                 enhanced_image.save('test2.5.jpg')
-                codes = zbarlight.scan_codes(['qrcode', 'code128'], enhanced_image)                
-#                 print( codes )
+                codes = zbarlight.scan_codes(['qrcode', 'code128'], enhanced_image)
                 day, plate = extract_codes (codes, day, plate)
             if day != None and plate != None :
                 return plate.decode("utf-8"), day.decode("utf-8")
