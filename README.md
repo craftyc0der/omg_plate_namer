@@ -23,6 +23,8 @@ jupyter lab
 ### Priors
 The assumption here is that there is a folder that contains raw images. Adjacent to that folder should be a csv file with the same name as the folder.
 
+### How to run program from terminal
+
 ```bash
 $ ls -al
 drwxrwxr-x 2 josh josh 28672 Oct 24 13:33 milkweed_foliar_fungal_endophytes
