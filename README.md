@@ -65,7 +65,7 @@ conda install nb_conda
 The program is called like this:
 
 ```bash
-conda activate plates
+$ conda activate plates
 $ python plates.py --help
 python plates.py -s <source-path> -d <destination-path> -m (files will be moved rather than copied) -f (run without prompt for automated scripting)
 $
