@@ -62,9 +62,9 @@ def extract_codes( codes, day, plate ):
     # set day to iday if it has not been set before
     # sme for plate
     if day == None and iday:
-        day = iday
+        day = iday.strip()
     if plate == None and iplate:
-        plate = iplate                
+        plate = iplate.strip()              
     return day, plate
             
 # this describes what has to be done to the image to make it easier for the sccanner to read
@@ -90,10 +90,11 @@ def rename_files( from_path, to_path, move ) :
     # defines a dictionary
     # add the barcode and new filename from csv to dictionary
     fileDict = {}
-    with open(from_path + '.csv', newline='\n') as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            fileDict[row['photoID']] = row['sampleID']
+    if os.path.exists( from_path + '.csv' ):
+        with open(from_path + '.csv', newline='\n') as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                fileDict[row['photoID']] = row['sampleID']
     # list all files in the path
     directory = os.fsencode( from_path )
     # sends every file through here to become independent of one another

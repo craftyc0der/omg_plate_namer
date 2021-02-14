@@ -2,6 +2,8 @@ milkweed_foliar_fungal_endophytes/
 milkweed_foliar_fungal_endophytes.csv
 test/
 sorted/
+new/
+*.csv
 __pycache__
 .ipynb_checkpoints
 Untitled.ipynb
